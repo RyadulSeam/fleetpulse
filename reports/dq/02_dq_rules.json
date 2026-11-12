@@ -1,0 +1,242 @@
+[
+  {
+    "id": "R01-orders",
+    "title": "Primary key `order_id` unique",
+    "severity": "error",
+    "affected": 0,
+    "total": 27979,
+    "pct": 0.0,
+    "decision": "none needed",
+    "detail": ""
+  },
+  {
+    "id": "R01-drivers",
+    "title": "Primary key `driver_id` unique",
+    "severity": "error",
+    "affected": 0,
+    "total": 55,
+    "pct": 0.0,
+    "decision": "none needed",
+    "detail": ""
+  },
+  {
+    "id": "R01-vehicles",
+    "title": "Primary key `vehicle_id` unique",
+    "severity": "error",
+    "affected": 0,
+    "total": 45,
+    "pct": 0.0,
+    "decision": "none needed",
+    "detail": ""
+  },
+  {
+    "id": "R01-hubs",
+    "title": "Primary key `hub_id` unique",
+    "severity": "error",
+    "affected": 0,
+    "total": 6,
+    "pct": 0.0,
+    "decision": "none needed",
+    "detail": ""
+  },
+  {
+    "id": "R02-hub",
+    "title": "Orders.hub_name resolves to Hubs",
+    "severity": "error",
+    "affected": 0,
+    "total": 27979,
+    "pct": 0.0,
+    "decision": "replaced hub_name with hub_id",
+    "detail": ""
+  },
+  {
+    "id": "R02-vehicle",
+    "title": "Orders.vehicle_code resolves to Vehicles",
+    "severity": "error",
+    "affected": 0,
+    "total": 27979,
+    "pct": 0.0,
+    "decision": "replaced vehicle_code with vehicle_id",
+    "detail": ""
+  },
+  {
+    "id": "R02-driver",
+    "title": "Orders.driver_id exists in Drivers",
+    "severity": "error",
+    "affected": 0,
+    "total": 27979,
+    "pct": 0.0,
+    "decision": "kept driver_id as FK",
+    "detail": ""
+  },
+  {
+    "id": "R03",
+    "title": "Orders.Driver Name disagrees with Drivers master for the same Driver ID",
+    "severity": "error",
+    "affected": 27979,
+    "total": 27979,
+    "pct": 100.0,
+    "decision": "Drivers master is authoritative; Orders.driver_name dropped (denormalised copy was unreliable)",
+    "detail": "Every Driver ID carries exactly one name in Orders, but it differs from the master name for all IDs."
+  },
+  {
+    "id": "R04",
+    "title": "Duplicate driver names in Drivers (different IDs)",
+    "severity": "warn",
+    "affected": 4,
+    "total": 55,
+    "pct": 7.27,
+    "decision": "names are never used as keys; always join on driver_id",
+    "detail": "Charles Harris, Daniel Martin"
+  },
+  {
+    "id": "R05",
+    "title": "Same vehicle model appears under several vehicle types",
+    "severity": "warn",
+    "affected": 6,
+    "total": 9,
+    "pct": 66.67,
+    "decision": "vehicle_type (operational class from Orders) moved to Vehicles dim next to vehicle_model; both kept, conflict documented",
+    "detail": "Models affected: Chevrolet Express, Ford Transit, Freightliner M2, International DuraStar, Mercedes Sprinter, Ram ProMaster"
+  },
+  {
+    "id": "R05b",
+    "title": "Vehicles never used in any order",
+    "severity": "info",
+    "affected": 4,
+    "total": 45,
+    "pct": 8.89,
+    "decision": "kept in dim as 'Unassigned' (spare fleet)",
+    "detail": ""
+  },
+  {
+    "id": "R06",
+    "title": "Drivers/vehicles working for more than one hub",
+    "severity": "info",
+    "affected": 0,
+    "total": 100,
+    "pct": 0.0,
+    "decision": "home_hub_id = modal hub (data shows 1:1)",
+    "detail": ""
+  },
+  {
+    "id": "R07a",
+    "title": "Cancelled orders flagged Is Delayed=True",
+    "severity": "error",
+    "affected": 252,
+    "total": 252,
+    "pct": 100.0,
+    "decision": "is_delayed recomputed: delay only applies to Delivered orders",
+    "detail": ""
+  },
+  {
+    "id": "R07b",
+    "title": "Cancelled orders carrying CSAT=1 placeholder",
+    "severity": "error",
+    "affected": 252,
+    "total": 252,
+    "pct": 100.0,
+    "decision": "csat_score set to NULL for cancelled orders (no survey exists)",
+    "detail": ""
+  },
+  {
+    "id": "R08a",
+    "title": "Delivery date != order date + floor((processing+delivery hours)/24)",
+    "severity": "warn",
+    "affected": 1830,
+    "total": 27727,
+    "pct": 6.6,
+    "decision": "hours are treated as the authoritative duration; Step 03 builds timestamps so dates reconcile wherever feasible",
+    "detail": "within +-1 day: 100.0%"
+  },
+  {
+    "id": "R08b",
+    "title": "Delivery before order",
+    "severity": "error",
+    "affected": 0,
+    "total": 27727,
+    "pct": 0.0,
+    "decision": "none needed",
+    "detail": ""
+  },
+  {
+    "id": "R09a",
+    "title": "Order served by a vehicle before its purchase date",
+    "severity": "warn",
+    "affected": 782,
+    "total": 27979,
+    "pct": 2.79,
+    "decision": "kept; flagged as `vehicle_before_purchase`. Dim dates treated as registry dates, not in-service dates",
+    "detail": "7 vehicles involved"
+  },
+  {
+    "id": "R09b",
+    "title": "Order served by a driver before hire date",
+    "severity": "warn",
+    "affected": 1193,
+    "total": 27979,
+    "pct": 4.26,
+    "decision": "kept; flagged as `driver_before_hire`",
+    "detail": ""
+  },
+  {
+    "id": "R10",
+    "title": "Orders served by vehicles whose *current* status is 'Maintenance'",
+    "severity": "info",
+    "affected": 7581,
+    "total": 27979,
+    "pct": 27.1,
+    "decision": "Vehicle Status is a point-in-time snapshot, not history; never used as a historical filter",
+    "detail": ""
+  },
+  {
+    "id": "R11a",
+    "title": "csat_score outside 1-5",
+    "severity": "error",
+    "affected": 0,
+    "total": 27979,
+    "pct": 0.0,
+    "decision": "none needed",
+    "detail": ""
+  },
+  {
+    "id": "R11b",
+    "title": "non-positive durations",
+    "severity": "error",
+    "affected": 0,
+    "total": 27979,
+    "pct": 0.0,
+    "decision": "none needed",
+    "detail": ""
+  },
+  {
+    "id": "R11c",
+    "title": "Missing delivery hours on delivered orders",
+    "severity": "error",
+    "affected": 0,
+    "total": 27979,
+    "pct": 0.0,
+    "decision": "none needed",
+    "detail": ""
+  },
+  {
+    "id": "R12",
+    "title": "Hub Capacity unit undocumented",
+    "severity": "warn",
+    "affected": 6,
+    "total": 6,
+    "pct": 100.0,
+    "decision": "assumed orders/month (ADR-0003). Mean monthly utilisation: hub 1: 122%, hub 2: 75%, hub 3: 77%, hub 4: 78%, hub 5: 75%, hub 6: 76%",
+    "detail": ""
+  },
+  {
+    "id": "R13",
+    "title": "Delay reasons are near-uniformly distributed",
+    "severity": "info",
+    "affected": 0,
+    "total": 1,
+    "pct": 0.0,
+    "decision": "No action. Expect weak predictive signal; modelling step must report this honestly",
+    "detail": "chi-square uniformity p=0.668; share range 9.3%-10.5%. Delay rate vs hub: chi-square p=0.199"
+  }
+]

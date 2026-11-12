@@ -1,0 +1,35 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+.ruff_cache/
+data/interim/*
+data/processed/*
+data/external/*
+data/stream/*
+!**/.gitkeep
+models/*.joblib
+*.pbix
+.DS_Store
+.env.*
+!.env.example
+
+# Raw source data
+data/raw/*.csv
+
+# Trained model binaries
+models/**/*.joblib
+
+# Backup files
+*.before-demo
+*.before-demo.bak
+*.before-update
+*.bak
+Makefile.before-demo-targets
+
+# Unnecessary empty file
+100]
+# Generated row-level reports
+reports/**/segments.csv
+reports/ml/forecast_backtest_rows.csv

@@ -1,0 +1,31 @@
+{
+  "backtest_folds": 6,
+  "backtest_rows": 495,
+  "scores": {
+    "seasonal_naive": {
+      "wape": 0.3356003752345216,
+      "bias_pct": 0.02345215759849906,
+      "mae": 2.168181818181818
+    },
+    "moving_avg_28": {
+      "wape": 0.38223083693690324,
+      "bias_pct": -0.07218021132968053,
+      "mae": 2.469442861665084
+    },
+    "lightgbm": {
+      "wape": 0.3141520240334464,
+      "bias_pct": 2.5223489652633444,
+      "mae": 2.0296124704221445
+    }
+  },
+  "selected": "lightgbm",
+  "wape_by_hub": {
+    "1": 0.2670456110111992,
+    "2": 0.24223786298658637,
+    "3": 0.3450493533151619,
+    "4": 0.3500253563432906,
+    "5": 0.3863593433107256,
+    "6": 0.4359896295547678
+  },
+  "interpretation": "WAPE = sum|error| / sum(actual). Lower is better. Compare against the baselines, not against zero."
+}

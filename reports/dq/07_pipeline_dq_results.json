@@ -1,0 +1,106 @@
+[
+  {
+    "id": "C01",
+    "severity": "error",
+    "check": "Every order has an order_created event",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C02",
+    "severity": "error",
+    "check": "No order has more than 6 events (one per event type)",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C03",
+    "severity": "error",
+    "check": "Timeline order: created <= hub_received <= dispatched <= delivered",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C04",
+    "severity": "error",
+    "check": "Orders resolve to hub, driver and vehicle dimensions",
+    "violations": 1,
+    "status": "FAIL",
+    "detail": ""
+  },
+  {
+    "id": "C05",
+    "severity": "error",
+    "check": "Delivered orders carry an is_delayed flag",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C06",
+    "severity": "error",
+    "check": "delay_reason present if and only if delayed",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C07",
+    "severity": "error",
+    "check": "Cancelled orders are never 'delayed' and have no CSAT",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C08",
+    "severity": "error",
+    "check": "CSAT within 1-5",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C09",
+    "severity": "error",
+    "check": "Telemetry coordinates/fuel/speed within valid ranges",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C10",
+    "severity": "warn",
+    "check": "No dead-letter messages",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C11",
+    "severity": "warn",
+    "check": "Stuck orders (not finished 10+ sim-days after creation)",
+    "violations": 0,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "id": "C12",
+    "severity": "warn",
+    "check": "Ingestion latency under 60s (producer -> bronze) for live events",
+    "violations": 560,
+    "status": "WARN",
+    "detail": ""
+  },
+  {
+    "id": "C13",
+    "severity": "warn",
+    "check": "Warehouse order count equals source order count (see detail)",
+    "violations": 136,
+    "status": "WARN",
+    "detail": "warehouse=27,843 source=27,979"
+  }
+]

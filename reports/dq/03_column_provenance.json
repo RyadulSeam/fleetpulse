@@ -1,0 +1,46 @@
+{
+  "SOURCE": [
+    "order_id",
+    "order_date",
+    "order_status",
+    "is_delayed*",
+    "delay_reason",
+    "hub_id",
+    "driver_id",
+    "vehicle_id",
+    "hub_processing_time_hours",
+    "delivery_time_hours",
+    "csat_score",
+    "source_delivery_date"
+  ],
+  "EXTERNAL": [
+    "temp_c",
+    "precip_mm",
+    "wind_kmh",
+    "weather_code",
+    "is_severe_weather",
+    "is_holiday",
+    "lat/lon of hubs & cities"
+  ],
+  "DERIVED": [
+    "created_at*",
+    "hub_received_at",
+    "dispatched_at",
+    "delivered_at",
+    "cancelled_at",
+    "feedback_at",
+    "distance_km (from synthetic city)",
+    "is_weekend",
+    "delivery_date_reconciled"
+  ],
+  "SYNTHETIC": [
+    "destination_city",
+    "dest_lat",
+    "dest_lon",
+    "service_level",
+    "package_weight_kg",
+    "time-of-day of created_at",
+    "vehicle telemetry (Step 04)"
+  ],
+  "NOTE": "* is_delayed corrected in Step 02 (cancelled != delayed). Weather rows carry weather_source = open-meteo | synthetic_fallback."
+}

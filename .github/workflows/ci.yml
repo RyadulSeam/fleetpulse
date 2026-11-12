@@ -1,0 +1,36 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: {POSTGRES_USER: fleet, POSTGRES_PASSWORD: fleet, POSTGRES_DB: fleetpulse}
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U fleet" --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11", cache: pip}
+      - run: pip install -r requirements.txt
+      - run: ruff check .
+      - name: Batch pipeline (steps 01-03; weather falls back to flagged synthetic if API blocked)
+        run: |
+          python pipeline/01_convert_and_profile.py
+          python pipeline/02_clean_standardize.py
+          python pipeline/03_enrich.py
+      - name: Stream (JSONL sink, no broker) -> bronze -> warehouse -> DQ gate
+        run: |
+          python pipeline/04_replay_stream.py --mode backfill --sink jsonl
+          python pipeline/04_replay_stream.py --mode live --sink jsonl --speed 0
+          python pipeline/05_consume_to_postgres.py --source jsonl --file data/stream/events_backfill.jsonl
+          python pipeline/05_consume_to_postgres.py --source jsonl --file data/stream/events_live.jsonl
+          python pipeline/06_build_warehouse.py
+          python pipeline/07_run_dq_checks.py
+      - name: ML
+        run: |
+          python pipeline/08_train_models.py
+          python pipeline/09_forecast_demand.py
+      - run: pytest -q

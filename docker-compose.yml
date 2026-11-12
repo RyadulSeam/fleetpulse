@@ -1,0 +1,42 @@
+# FleetPulse local infrastructure (100% free / open source). Python code runs on the host in a venv.
+#   docker compose up -d        start    |    docker compose down     stop (data kept)    |   docker compose down -v   wipe all data
+services:
+  postgres:
+    image: postgres:16
+    container_name: fleetpulse-postgres
+    environment:
+      POSTGRES_USER: fleet
+      POSTGRES_PASSWORD: fleet
+      POSTGRES_DB: fleetpulse
+    ports: ["5433:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fleet -d fleetpulse"]
+      interval: 5s
+      retries: 10
+
+  redpanda:                      # Kafka-compatible broker, single node, dev mode
+    image: docker.redpanda.com/redpandadata/redpanda:v24.2.7
+    container_name: fleetpulse-redpanda
+    command:
+      - redpanda
+      - start
+      - --mode=dev-container
+      - --smp=1
+      - --memory=1G
+      - --kafka-addr=internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr=internal://redpanda:9092,external://localhost:19092
+    ports: ["19092:19092"]
+    volumes: ["rpdata:/var/lib/redpanda/data"]
+
+  redpanda-console:              # web UI to watch topics/messages live: http://localhost:8080
+    image: docker.redpanda.com/redpandadata/console:v2.7.2
+    container_name: fleetpulse-console
+    depends_on: [redpanda]
+    environment:
+      KAFKA_BROKERS: redpanda:9092
+    ports: ["8080:8080"]
+
+volumes:
+  pgdata:
+  rpdata:

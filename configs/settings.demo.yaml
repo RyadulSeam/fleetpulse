@@ -1,0 +1,56 @@
+# FleetPulse – central configuration. Secrets come from environment variables (.env), not here.
+paths:
+  raw: data/raw
+  interim: data/interim
+  processed: data/processed
+  external: data/external
+  stream: data/stream_demo
+  reports_dq: reports/demo/dq
+  reports_ml: reports/demo/ml
+  models: models/demo
+  forecast_output: data/forecast_demo
+
+source_dates:
+  format: "%d-%m-%Y"          # raw files use dd-mm-yyyy
+  expected_min: "2023-01-01"
+  expected_max: "2024-12-31"
+
+business_rules:
+  # Hub Capacity unit is undocumented in the source. Inferred: orders per month
+  # (5 of 6 hubs run at 75-77% of capacity on that basis). See ADR-0003.
+  hub_capacity_unit: orders_per_month
+  road_distance_factor: 1.25   # straight-line -> road distance multiplier
+
+enrichment:
+  seed: 42
+  weather:
+    provider: open-meteo
+    url: https://archive-api.open-meteo.com/v1/archive
+    daily_vars: [temperature_2m_mean, precipitation_sum, wind_speed_10m_max, weather_code]
+    allow_synthetic_fallback: true   # used only if the API is unreachable; flagged per-row
+  created_time_of_day: {mean_hour: 13.0, sd_hours: 3.5, min_hour: 6.0, max_hour: 21.5}
+  hub_receive_lag_minutes: [5, 30]
+  service_level_mix: {Standard: 0.70, Express: 0.20, Economy: 0.10}
+  package_weight_kg: {lognormal_mean: 2.6, lognormal_sigma: 0.7, min: 0.5, max: 500}
+  feedback_lag_hours: [1, 24]
+
+hubs:   # real city coordinates; tz used to convert local order times to UTC
+  1: {lat: 32.7767, lon: -96.7970,  tz: America/Chicago, cities: {Plano: [33.0198, -96.6989], Irving: [32.8140, -96.9489], Garland: [32.9126, -96.6389], Mesquite: [32.7668, -96.5992], Richardson: [32.9483, -96.7299], Frisco: [33.1507, -96.8236]}}
+  2: {lat: 29.7604, lon: -95.3698,  tz: America/Chicago, cities: {Sugar Land: [29.6197, -95.6349], Pasadena: [29.6911, -95.2091], Katy: [29.7858, -95.8245], The Woodlands: [30.1658, -95.4613], Baytown: [29.7355, -94.9774], Pearland: [29.5636, -95.2860]}}
+  3: {lat: 30.2672, lon: -97.7431,  tz: America/Chicago, cities: {Round Rock: [30.5083, -97.6789], Cedar Park: [30.5052, -97.8203], Georgetown: [30.6333, -97.6770], San Marcos: [29.8833, -97.9414], Pflugerville: [30.4394, -97.6200], Kyle: [29.9891, -97.8772]}}
+  4: {lat: 29.4241, lon: -98.4936,  tz: America/Chicago, cities: {New Braunfels: [29.7030, -98.1245], Schertz: [29.5522, -98.2697], Boerne: [29.7947, -98.7320], Seguin: [29.5688, -97.9647], Converse: [29.5183, -98.3164], Helotes: [29.5788, -98.6892]}}
+  5: {lat: 32.7555, lon: -97.3308,  tz: America/Chicago, cities: {Arlington: [32.7357, -97.1081], Weatherford: [32.7593, -97.7973], Keller: [32.9346, -97.2517], Burleson: [32.5421, -97.3208], Mansfield: [32.5632, -97.1417], Grapevine: [32.9343, -97.0781]}}
+  6: {lat: 31.7619, lon: -106.4850, tz: America/Denver,   cities: {Socorro: [31.6543, -106.3030], Horizon City: [31.6915, -106.2178], Canutillo: [31.9140, -106.6030], Anthony: [32.0054, -106.6097], Clint: [31.5909, -106.2300], Fabens: [31.5017, -106.1597]}}
+
+stream:
+  topics: {orders: fleetpulse_demo.order_events, telemetry: fleetpulse_demo.vehicle_telemetry}
+  schema_version: 1
+  source_name: fleetpulse-demo-replay-simulator
+  chaos: {duplicate_rate: 0.005, late_rate: 0.01, max_late_minutes: 120}
+  telemetry: {ping_minutes: 30, max_radius_km: 35}
+
+ml:
+  seed: 42
+  split: {train_end: "2024-06-30", valid_end: "2024-09-30"}   # test = Oct-Dec 2024
+  min_auc_lower_bound_for_signal: 0.55
+  forecast: {horizon_days: 14, backtest_days: 91}

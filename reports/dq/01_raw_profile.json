@@ -1,0 +1,335 @@
+{
+  "Orders": {
+    "source_encoding": "utf-16",
+    "rows": 27979,
+    "columns": {
+      "Order ID": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 27979,
+        "sample": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "Actual Delivery Date": {
+        "dtype": "str",
+        "nulls": 252,
+        "distinct": 735,
+        "sample": [
+          "25-10-2024",
+          "16-06-2024",
+          "05-07-2024"
+        ]
+      },
+      "Delay Reason": {
+        "dtype": "str",
+        "nulls": 22071,
+        "distinct": 10,
+        "sample": [
+          "Severe Weather",
+          "Customer Not Home",
+          "Incorrect Address"
+        ]
+      },
+      "Driver ID": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 55,
+        "sample": [
+          "43",
+          "29",
+          "25"
+        ]
+      },
+      "Driver Name": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 53,
+        "sample": [
+          "Karen Rodriguez",
+          "Matthew Williams",
+          "Nancy Harris"
+        ]
+      },
+      "Hub Name": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 6,
+        "sample": [
+          "San Antonio Hub",
+          "Houston Hub",
+          "Austin Hub"
+        ]
+      },
+      "Is Delayed": {
+        "dtype": "bool",
+        "nulls": 0,
+        "distinct": 2,
+        "sample": [
+          "False",
+          "True"
+        ]
+      },
+      "Is On Time": {
+        "dtype": "bool",
+        "nulls": 0,
+        "distinct": 2,
+        "sample": [
+          "True",
+          "False"
+        ]
+      },
+      "Order Date": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 731,
+        "sample": [
+          "25-10-2024",
+          "16-06-2024",
+          "05-07-2024"
+        ]
+      },
+      "Order Status": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 2,
+        "sample": [
+          "Delivered",
+          "Cancelled"
+        ]
+      },
+      "Vehicle Name": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 41,
+        "sample": [
+          "FT-036",
+          "FT-016",
+          "FT-040"
+        ]
+      },
+      "Vehicle Type": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 4,
+        "sample": [
+          "Truck",
+          "Van",
+          "Pickup"
+        ]
+      },
+      "Customer Satisfaction Score": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 5,
+        "sample": [
+          "4",
+          "5",
+          "3"
+        ]
+      },
+      "Delivery Time Hours": {
+        "dtype": "float64",
+        "nulls": 252,
+        "distinct": 7989,
+        "sample": [
+          "6.81",
+          "5.74",
+          "12.91"
+        ]
+      },
+      "Hub Processing Time Hours": {
+        "dtype": "float64",
+        "nulls": 0,
+        "distinct": 376,
+        "sample": [
+          "0.89",
+          "3.6",
+          "2.07"
+        ]
+      }
+    },
+    "duplicate_rows": 0
+  },
+  "Drivers": {
+    "source_encoding": "utf-16",
+    "rows": 55,
+    "columns": {
+      "DriverID": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 55,
+        "sample": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "DriverName": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 53,
+        "sample": [
+          "Sarah Lopez",
+          "Lisa Davis",
+          "Steven Anderson"
+        ]
+      },
+      "Employment Type": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 3,
+        "sample": [
+          "Contract",
+          "Full-time",
+          "Part-time"
+        ]
+      },
+      "Hire Date": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 54,
+        "sample": [
+          "23-11-2021",
+          "19-06-2019",
+          "18-08-2022"
+        ]
+      },
+      "Experience Years": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 8,
+        "sample": [
+          "6",
+          "3",
+          "1"
+        ]
+      },
+      "Performance Rating": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 5,
+        "sample": [
+          "4",
+          "5",
+          "3"
+        ]
+      }
+    },
+    "duplicate_rows": 0
+  },
+  "Hubs": {
+    "source_encoding": "utf-16",
+    "rows": 6,
+    "columns": {
+      "Hub ID": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 6,
+        "sample": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "HubName": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 6,
+        "sample": [
+          "Dallas Main Hub",
+          "Houston Hub",
+          "Austin Hub"
+        ]
+      },
+      "Hub Capacity": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 6,
+        "sample": [
+          "250",
+          "380",
+          "220"
+        ]
+      }
+    },
+    "duplicate_rows": 0
+  },
+  "Vehicles": {
+    "source_encoding": "utf-16",
+    "rows": 45,
+    "columns": {
+      "Purchase Date": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 43,
+        "sample": [
+          "22-07-2022",
+          "05-10-2019",
+          "13-10-2022"
+        ]
+      },
+      "Vehicle ID": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 45,
+        "sample": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "Vehicle Model": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 9,
+        "sample": [
+          "Mercedes Sprinter",
+          "Freightliner M2",
+          "Chevrolet Express"
+        ]
+      },
+      "Vehicle Status": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 2,
+        "sample": [
+          "Active",
+          "Maintenance"
+        ]
+      },
+      "Breakdown": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 20,
+        "sample": [
+          "5",
+          "25",
+          "11"
+        ]
+      },
+      "Maintenance count Alert": {
+        "dtype": "int64",
+        "nulls": 0,
+        "distinct": 2,
+        "sample": [
+          "0",
+          "1"
+        ]
+      },
+      "Vehicle Code": {
+        "dtype": "str",
+        "nulls": 0,
+        "distinct": 45,
+        "sample": [
+          "FT-001",
+          "FT-002",
+          "FT-003"
+        ]
+      }
+    },
+    "duplicate_rows": 0
+  }
+}

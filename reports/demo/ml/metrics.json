@@ -1,0 +1,70 @@
+{
+  "split": {
+    "train": 20858,
+    "valid": 3372,
+    "test": 3497
+  },
+  "delay_classifier": {
+    "baseline_prevalence": {
+      "auc": 0.5,
+      "brier": 0.16521256000396037
+    },
+    "logistic_regression": {
+      "auc": 0.5022184156719854,
+      "auc_ci95": [
+        0.4779024296488821,
+        0.5264154985995565
+      ],
+      "pr_auc": 0.21419103520617297,
+      "pr_auc_baseline": 0.2087503574492422,
+      "brier": 0.16537595088062818,
+      "top_decile_lift": 0.9991428571428572
+    },
+    "lightgbm": {
+      "auc": 0.4900577253441985,
+      "auc_ci95": [
+        0.4682187948090661,
+        0.5133218863198782
+      ],
+      "pr_auc": 0.20326412014716022,
+      "pr_auc_baseline": 0.2087503574492422,
+      "brier": 0.16528090011668492,
+      "top_decile_lift": 0.8461694571283612
+    },
+    "verdict": {
+      "best_model": "logistic_regression",
+      "auc_lower_bound": 0.4779024296488821,
+      "threshold": 0.55,
+      "reliable_signal": false
+    },
+    "lightgbm_top_features_gain": {
+      "vehicle_age_years": 0.1654,
+      "hub_delay_rate_lag7_28d": 0.1184,
+      "precip_mm": 0.0809,
+      "package_weight_kg": 0.0746,
+      "hub_processing_time_hours": 0.069,
+      "created_hour_utc": 0.0638,
+      "hub_orders_prev7d": 0.0613,
+      "driver_tenure_years": 0.0612
+    }
+  },
+  "eta_regressor": {
+    "baseline_global_mean": {
+      "mae": 18.84714839449937
+    },
+    "baseline_hub_median": {
+      "mae": 18.680050042893907
+    },
+    "lightgbm_mae": {
+      "mae": 18.628979051613417,
+      "r2": -0.007977211434823994
+    },
+    "skill_vs_hub_median": 0.0027339857850069427,
+    "reliable_signal": false
+  },
+  "segmentation": {
+    "overall_delay_rate": 0.20398889169401666,
+    "dimensions_tested": 10,
+    "dimensions_significant_bonferroni": 0
+  }
+}
