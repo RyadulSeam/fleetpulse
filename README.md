@@ -286,7 +286,7 @@ reports/                   generated DQ + ML reports         executive_summary.m
 
 - [x] Phase 1 — Data engineering, warehouse, streaming, DQ, ML, forecast, live dashboard, API
 
-- [ ]Phase 2 — Grafana ops board, dbt migration of SQL layers, containerised app services, Airflow/Prefect scheduling
+- [x] Phase 2 — Grafana ops board, dbt migration of SQL layers, containerised app services, Airflow/Prefect scheduling
 
 ## License
 
