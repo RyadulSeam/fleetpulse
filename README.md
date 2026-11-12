@@ -285,8 +285,8 @@ reports/                   generated DQ + ML reports         executive_summary.m
 ## Roadmap
 
 - [x] Phase 1 — Data engineering, warehouse, streaming, DQ, ML, forecast, live dashboard, API
-- [ ] **Phase 2 — Power BI analytical dashboards** (connection + page plan ready: [`docs/08_POWERBI_HANDOFF.md`](docs/08_POWERBI_HANDOFF.md))
-- [ ] Optional: Grafana ops board, dbt migration of SQL layers, containerised app services, Airflow/Prefect scheduling
+
+- [ ]Phase 2 — Grafana ops board, dbt migration of SQL layers, containerised app services, Airflow/Prefect scheduling
 
 ## License
 
